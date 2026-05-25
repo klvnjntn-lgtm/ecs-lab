@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./ecs-project # Crucial for monorepo
+        working-directory: ./ecs-lab # Crucial for monorepo
     outputs:
       cluster_name: ${{ steps.set_output.outputs.ecs_cluster_name }}
       service_name: ${{ steps.set_output.outputs.ecs_service_name }}
