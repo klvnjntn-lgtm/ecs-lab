@@ -107,7 +107,7 @@ resource "aws_lb_target_group" "grafana_tg" {
   target_type = "ip"
 
   health_check {
-    path                = "/api/health"
+    path                = "/grafana/api/health"
     matcher             = "200"
   }
 }
