@@ -29,8 +29,10 @@ resource "aws_ecs_task_definition" "app" {
       essential = true
       portMappings = [{ containerPort = 3000, hostPort = 3000, protocol = "tcp" }]
       environment = [
-        { name = "GF_SERVER_ROOT_URL", value = "http://kelvin-cloud-project-alb-601915457.ap-southeast-1.elb.amazonaws.com/grafana/" },
-        { name = "GF_SERVER_SERVE_FROM_SUB_PATH", value = "true" },
+{
+          name  = "GF_SERVER_ROOT_URL"
+          value = "http://Kelvin-Cloud-Project-alb-176713956.ap-southeast-1.elb.amazonaws.com/grafana/"
+        },        { name = "GF_SERVER_SERVE_FROM_SUB_PATH", value = "true" },
         { name = "GF_SESSION_COOKIE_PATH", value = "/grafana/" },
         { name = "GF_SESSION_COOKIE_SECURE", value = "false" },
         { name = "GF_SECURITY_COOKIE_SAMESITE", value = "lax" }
