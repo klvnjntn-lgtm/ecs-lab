@@ -13,7 +13,7 @@ terraform {
 
   backend "s3" {
     bucket       = "kelvin-terraform-state-permanent"
-    key          = "eks/terraform.tfstate"
+    key          = "ecs/terraform.tfstate"
     region       = "ap-southeast-1"
     use_lockfile = true
     encrypt      = true
@@ -40,6 +40,6 @@ data "aws_secretsmanager_secret_version" "grafana_token" {
 
 provider "grafana" {
 url   = "http://Kelvin-Cloud-Project-alb-176713956.ap-southeast-1.elb.amazonaws.com/grafana/"
-  auth = data.aws_secretsmanager_secret_version.grafana_token.secret_string
+auth = "data:aws_secretsmanager_secret_version.grafana_token.secret_string"
 }
 
