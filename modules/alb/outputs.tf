@@ -29,3 +29,7 @@ output "tg_2_arn" {
 output "grafana_tg_arn" {
   value = aws_lb_target_group.grafana_tg.arn
 }
+
+output "alb_listener_rule_monitoring_arn" {
+  value = aws_lb_listener_rule.monitoring.arn
+}

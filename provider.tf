@@ -39,7 +39,7 @@ data "aws_secretsmanager_secret_version" "grafana_token" {
 }
 
 provider "grafana" {
-url   = "http://Kelvin-Cloud-Project-alb-176713956.ap-southeast-1.elb.amazonaws.com/grafana"
+url   = "http://Kelvin-Cloud-Project-alb-176713956.ap-southeast-1.elb.amazonaws.com/grafana/"
   auth = data.aws_secretsmanager_secret_version.grafana_token.secret_string
 }
 

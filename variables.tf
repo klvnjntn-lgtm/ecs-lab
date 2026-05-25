@@ -28,3 +28,8 @@ variable "container_name" {
   default = "my-app-container"
 }
 
+variable "region" {
+  type    = string
+  default = "ap-southeast-1"
+}
+

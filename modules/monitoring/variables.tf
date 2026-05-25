@@ -27,3 +27,13 @@ variable "grafana_token" {
   sensitive   = true
   default     = "INSERT_TOKEN_HERE"
 }
+
+variable "alb_listener_rule_arn" {
+  type        = string
+  description = "ARN of the ALB listener rule for Grafana"
+}
+
+variable "alb_dns_name" {
+  type        = string
+  description = "DNS name of the ALB"
+}

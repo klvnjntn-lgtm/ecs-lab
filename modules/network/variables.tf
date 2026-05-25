@@ -13,6 +13,10 @@ variable "public_subnet_cidrs" {
   description = "CIDR blocks for the public subnets"
 }
 
+variable "region" {
+  type        = string
+  description = "AWS region"
+}
 #variable "private_subnet_cidrs" {
 #type        = list(string)
 #description = "CIDR blocks for the private subnets"
