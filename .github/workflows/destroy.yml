@@ -5,7 +5,7 @@ on:
 
 jobs:
   terraform-destroy:
-    name: "Terraform EKS Destroy"
+    name: "Terraform ECS Destroy"
     runs-on: ubuntu-latest
     permissions:
       id-token: write
