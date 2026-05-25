@@ -1,0 +1,1160 @@
+{
+  "version": 4,
+  "terraform_version": "1.14.8",
+  "serial": 210,
+  "lineage": "78860e79-e4a9-9534-874e-a3c534ac00a6",
+  "outputs": {
+    "alb_public_url": {
+      "value": "http://Kelvin-Cloud-Project-alb-569337048.ap-southeast-1.elb.amazonaws.com",
+      "type": "string"
+    },
+    "container_name": {
+      "value": "my-app-container",
+      "type": "string"
+    },
+    "ecs_cluster_name": {
+      "value": "Kelvin-Cloud-Project-cluster",
+      "type": "string"
+    },
+    "ecs_service_name": {
+      "value": "Kelvin-Cloud-Project-service",
+      "type": "string"
+    },
+    "ecs_task_definition_family": {
+      "value": "Kelvin-Cloud-Project-task",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "module": "module.alb",
+      "mode": "managed",
+      "type": "aws_lb",
+      "name": "app_alb",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "access_logs": [
+              {
+                "bucket": "",
+                "enabled": false,
+                "prefix": ""
+              }
+            ],
+            "arn": "arn:aws:elasticloadbalancing:ap-southeast-1:304188066409:loadbalancer/app/Kelvin-Cloud-Project-alb/ec3e2270d2c07370",
+            "arn_suffix": "app/Kelvin-Cloud-Project-alb/ec3e2270d2c07370",
+            "client_keep_alive": 3600,
+            "connection_logs": [
+              {
+                "bucket": "",
+                "enabled": false,
+                "prefix": ""
+              }
+            ],
+            "customer_owned_ipv4_pool": "",
+            "desync_mitigation_mode": "defensive",
+            "dns_name": "Kelvin-Cloud-Project-alb-569337048.ap-southeast-1.elb.amazonaws.com",
+            "dns_record_client_routing_policy": null,
+            "drop_invalid_header_fields": false,
+            "enable_cross_zone_load_balancing": true,
+            "enable_deletion_protection": false,
+            "enable_http2": true,
+            "enable_tls_version_and_cipher_suite_headers": false,
+            "enable_waf_fail_open": false,
+            "enable_xff_client_port": false,
+            "enable_zonal_shift": false,
+            "enforce_security_group_inbound_rules_on_private_link_traffic": "",
+            "health_check_logs": [
+              {
+                "bucket": "",
+                "enabled": false,
+                "prefix": ""
+              }
+            ],
+            "id": "arn:aws:elasticloadbalancing:ap-southeast-1:304188066409:loadbalancer/app/Kelvin-Cloud-Project-alb/ec3e2270d2c07370",
+            "idle_timeout": 60,
+            "internal": false,
+            "ip_address_type": "ipv4",
+            "ipam_pools": [],
+            "load_balancer_type": "application",
+            "minimum_load_balancer_capacity": [],
+            "name": "Kelvin-Cloud-Project-alb",
+            "name_prefix": "",
+            "preserve_host_header": false,
+            "region": "ap-southeast-1",
+            "secondary_ips_auto_assigned_per_subnet": null,
+            "security_groups": [
+              "sg-0ed096de73413e62b"
+            ],
+            "subnet_mapping": [
+              {
+                "allocation_id": "",
+                "ipv6_address": "",
+                "outpost_id": "",
+                "private_ipv4_address": "",
+                "subnet_id": "subnet-013f5da9e24446698"
+              },
+              {
+                "allocation_id": "",
+                "ipv6_address": "",
+                "outpost_id": "",
+                "private_ipv4_address": "",
+                "subnet_id": "subnet-0aa57888e042ffd18"
+              }
+            ],
+            "subnets": [
+              "subnet-013f5da9e24446698",
+              "subnet-0aa57888e042ffd18"
+            ],
+            "tags": {
+              "Name": "Kelvin-Cloud-Project-alb"
+            },
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Name": "Kelvin-Cloud-Project-alb",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0b76f007ce2a775ec",
+            "xff_header_processing_mode": "append",
+            "zone_id": "Z1LMS91P8CMLE5"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:elasticloadbalancing:ap-southeast-1:304188066409:loadbalancer/app/Kelvin-Cloud-Project-alb/ec3e2270d2c07370"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.alb.aws_security_group.alb_sg",
+            "module.network.aws_subnet.public",
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.alb",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "alb_sg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:security-group/sg-0ed096de73413e62b",
+            "description": "Security group for the Application Load Balancer",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-0ed096de73413e62b",
+            "ingress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 8080,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 8080
+              },
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 80,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [],
+                "self": false,
+                "to_port": 80
+              }
+            ],
+            "name": "Kelvin-Cloud-Project-alb-sg",
+            "name_prefix": "",
+            "owner_id": "304188066409",
+            "region": "ap-southeast-1",
+            "revoke_rules_on_delete": false,
+            "tags": {},
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "id": "sg-0ed096de73413e62b",
+            "region": "ap-southeast-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.ecs",
+      "mode": "managed",
+      "type": "aws_ecs_cluster",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ecs:ap-southeast-1:304188066409:cluster/Kelvin-Cloud-Project-cluster",
+            "configuration": [],
+            "id": "arn:aws:ecs:ap-southeast-1:304188066409:cluster/Kelvin-Cloud-Project-cluster",
+            "name": "Kelvin-Cloud-Project-cluster",
+            "region": "ap-southeast-1",
+            "service_connect_defaults": [],
+            "setting": [
+              {
+                "name": "containerInsights",
+                "value": "disabled"
+              }
+            ],
+            "tags": {},
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.ecs",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "ecs_sg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:security-group/sg-06daefa4e4b245242",
+            "description": "Managed by Terraform",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-06daefa4e4b245242",
+            "ingress": [
+              {
+                "cidr_blocks": [],
+                "description": "",
+                "from_port": 80,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [
+                  "sg-0ed096de73413e62b"
+                ],
+                "self": false,
+                "to_port": 80
+              }
+            ],
+            "name": "Kelvin-Cloud-Project-ecs-sg",
+            "name_prefix": "",
+            "owner_id": "304188066409",
+            "region": "ap-southeast-1",
+            "revoke_rules_on_delete": false,
+            "tags": {},
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "id": "sg-06daefa4e4b245242",
+            "region": "ap-southeast-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "module.alb.aws_security_group.alb_sg",
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.monitoring",
+      "mode": "data",
+      "type": "archive_file",
+      "name": "lambda_zip",
+      "provider": "provider[\"registry.terraform.io/hashicorp/archive\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "exclude_symlink_directories": null,
+            "excludes": null,
+            "id": "0ed4638704041d685ee6664260b871f035aa3d4e",
+            "output_base64sha256": "NSuqtHPsdkgEBxApp4ZRQXH/j3Czz5CAbaKkU/0rfes=",
+            "output_base64sha512": "UVbIBB0PsLYigQFDqXK/n9xBrnFKpC1fQ6+8WFKtxOdM2vjR7cX3q3HISjutx23x5tfwluFkA5mIlC/0AMhrZA==",
+            "output_file_mode": null,
+            "output_md5": "08905dc1610fae13d2a6fb893209b822",
+            "output_path": "modules/monitoring/lambda/discord_notifier.zip",
+            "output_sha": "0ed4638704041d685ee6664260b871f035aa3d4e",
+            "output_sha256": "352baab473ec764804071029a786514171ff8f70b3cf90806da2a453fd2b7deb",
+            "output_sha512": "5156c8041d0fb0b622810143a972bf9fdc41ae714aa42d5f43afbc5852adc4e74cdaf8d1edc5f7ab71c84a3badc76df1e6d7f096e164039988942ff400c86b64",
+            "output_size": 803,
+            "source": [],
+            "source_content": null,
+            "source_content_filename": null,
+            "source_dir": null,
+            "source_file": "modules/monitoring/lambda/discord_notifier.py",
+            "type": "zip"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.monitoring",
+      "mode": "managed",
+      "type": "aws_sns_topic",
+      "name": "alerts",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "application_failure_feedback_role_arn": "",
+            "application_success_feedback_role_arn": "",
+            "application_success_feedback_sample_rate": 0,
+            "archive_policy": "",
+            "arn": "arn:aws:sns:ap-southeast-1:304188066409:Kelvin-Cloud-Project-alerts",
+            "beginning_archive_time": "",
+            "content_based_deduplication": false,
+            "delivery_policy": "",
+            "display_name": "",
+            "fifo_throughput_scope": "",
+            "fifo_topic": false,
+            "firehose_failure_feedback_role_arn": "",
+            "firehose_success_feedback_role_arn": "",
+            "firehose_success_feedback_sample_rate": 0,
+            "http_failure_feedback_role_arn": "",
+            "http_success_feedback_role_arn": "",
+            "http_success_feedback_sample_rate": 0,
+            "id": "arn:aws:sns:ap-southeast-1:304188066409:Kelvin-Cloud-Project-alerts",
+            "kms_master_key_id": "",
+            "lambda_failure_feedback_role_arn": "",
+            "lambda_success_feedback_role_arn": "",
+            "lambda_success_feedback_sample_rate": 0,
+            "name": "Kelvin-Cloud-Project-alerts",
+            "name_prefix": "",
+            "owner": "304188066409",
+            "policy": "{\"Id\":\"__default_policy_ID\",\"Statement\":[{\"Action\":[\"SNS:GetTopicAttributes\",\"SNS:SetTopicAttributes\",\"SNS:AddPermission\",\"SNS:RemovePermission\",\"SNS:DeleteTopic\",\"SNS:Subscribe\",\"SNS:ListSubscriptionsByTopic\",\"SNS:Publish\"],\"Condition\":{\"StringEquals\":{\"AWS:SourceOwner\":\"304188066409\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"*\"},\"Resource\":\"arn:aws:sns:ap-southeast-1:304188066409:Kelvin-Cloud-Project-alerts\",\"Sid\":\"__default_statement_ID\"}],\"Version\":\"2008-10-17\"}",
+            "region": "ap-southeast-1",
+            "signature_version": 0,
+            "sqs_failure_feedback_role_arn": "",
+            "sqs_success_feedback_role_arn": "",
+            "sqs_success_feedback_sample_rate": 0,
+            "tags": {},
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "tracing_config": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "arn": "arn:aws:sns:ap-southeast-1:304188066409:Kelvin-Cloud-Project-alerts"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_default_security_group",
+      "name": "default",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:security-group/sg-09b3bcdc778244d3d",
+            "description": "default VPC security group",
+            "egress": [],
+            "id": "sg-09b3bcdc778244d3d",
+            "ingress": [],
+            "name": "default",
+            "name_prefix": "",
+            "owner_id": "304188066409",
+            "region": "ap-southeast-1",
+            "revoke_rules_on_delete": false,
+            "tags": {},
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_iam_role",
+      "name": "vpc_flow_log_role",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:iam::304188066409:role/Kelvin-Cloud-Project-vpc-flow-log-role20260418081443124400000001",
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"vpc-flow-logs.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+            "create_date": "2026-04-18T08:14:43Z",
+            "description": "",
+            "force_detach_policies": false,
+            "id": "Kelvin-Cloud-Project-vpc-flow-log-role20260418081443124400000001",
+            "inline_policy": [
+              {
+                "name": "Kelvin-Cloud-Project-vpc-flow-log-policy",
+                "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\",\"logs:DescribeLogGroups\",\"logs:DescribeLogStreams\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}"
+              }
+            ],
+            "managed_policy_arns": [],
+            "max_session_duration": 3600,
+            "name": "Kelvin-Cloud-Project-vpc-flow-log-role20260418081443124400000001",
+            "name_prefix": "Kelvin-Cloud-Project-vpc-flow-log-role",
+            "path": "/",
+            "permissions_boundary": "",
+            "tags": {},
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "unique_id": "AROAUNUYFRJUQ3K5M6XS7"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "name": "Kelvin-Cloud-Project-vpc-flow-log-role20260418081443124400000001"
+          },
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_iam_role_policy",
+      "name": "vpc_flow_log_policy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "Kelvin-Cloud-Project-vpc-flow-log-role20260418081443124400000001:Kelvin-Cloud-Project-vpc-flow-log-policy",
+            "name": "Kelvin-Cloud-Project-vpc-flow-log-policy",
+            "name_prefix": "",
+            "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"logs:CreateLogGroup\",\"logs:CreateLogStream\",\"logs:PutLogEvents\",\"logs:DescribeLogGroups\",\"logs:DescribeLogStreams\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}",
+            "role": "Kelvin-Cloud-Project-vpc-flow-log-role20260418081443124400000001"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "name": "Kelvin-Cloud-Project-vpc-flow-log-policy",
+            "role": "Kelvin-Cloud-Project-vpc-flow-log-role20260418081443124400000001"
+          },
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.network.aws_iam_role.vpc_flow_log_role"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_internet_gateway",
+      "name": "gw",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:internet-gateway/igw-03b609f03a9c41b0a",
+            "id": "igw-03b609f03a9c41b0a",
+            "owner_id": "304188066409",
+            "region": "ap-southeast-1",
+            "tags": {
+              "Name": "Kelvin-Cloud-Project-igw"
+            },
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Name": "Kelvin-Cloud-Project-igw",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_route_table",
+      "name": "public_rt",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:route-table/rtb-06d13fb42a41a32f3",
+            "id": "rtb-06d13fb42a41a32f3",
+            "owner_id": "304188066409",
+            "propagating_vgws": [],
+            "region": "ap-southeast-1",
+            "route": [
+              {
+                "carrier_gateway_id": "",
+                "cidr_block": "0.0.0.0/0",
+                "core_network_arn": "",
+                "destination_prefix_list_id": "",
+                "egress_only_gateway_id": "",
+                "gateway_id": "igw-03b609f03a9c41b0a",
+                "ipv6_cidr_block": "",
+                "local_gateway_id": "",
+                "nat_gateway_id": "",
+                "network_interface_id": "",
+                "transit_gateway_id": "",
+                "vpc_endpoint_id": "",
+                "vpc_peering_connection_id": ""
+              }
+            ],
+            "tags": {},
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "id": "rtb-06d13fb42a41a32f3",
+            "region": "ap-southeast-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_internet_gateway.gw",
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_route_table_association",
+      "name": "public_assoc",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-0b06433f541bdaf12",
+            "region": "ap-southeast-1",
+            "route_table_id": "rtb-06d13fb42a41a32f3",
+            "subnet_id": "subnet-0aa57888e042ffd18",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_internet_gateway.gw",
+            "module.network.aws_route_table.public_rt",
+            "module.network.aws_subnet.public",
+            "module.network.aws_vpc.main"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 0,
+          "attributes": {
+            "gateway_id": "",
+            "id": "rtbassoc-046c07dd87ad4a45a",
+            "region": "ap-southeast-1",
+            "route_table_id": "rtb-06d13fb42a41a32f3",
+            "subnet_id": "subnet-013f5da9e24446698",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAsImRlbGV0ZSI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEyMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "module.network.aws_internet_gateway.gw",
+            "module.network.aws_route_table.public_rt",
+            "module.network.aws_subnet.public",
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_subnet",
+      "name": "public",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "index_key": 0,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:subnet/subnet-0aa57888e042ffd18",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "ap-southeast-1a",
+            "availability_zone_id": "apse1-az2",
+            "cidr_block": "10.0.1.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-0aa57888e042ffd18",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "304188066409",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "ap-southeast-1",
+            "tags": {
+              "Name": "Kelvin-Cloud-Project-public-subnet-1"
+            },
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Name": "Kelvin-Cloud-Project-public-subnet-1",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "id": "subnet-0aa57888e042ffd18",
+            "region": "ap-southeast-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "module.network.aws_vpc.main"
+          ]
+        },
+        {
+          "index_key": 1,
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:subnet/subnet-013f5da9e24446698",
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "ap-southeast-1b",
+            "availability_zone_id": "apse1-az1",
+            "cidr_block": "10.0.2.0/24",
+            "customer_owned_ipv4_pool": "",
+            "enable_dns64": false,
+            "enable_lni_at_device_index": 0,
+            "enable_resource_name_dns_a_record_on_launch": false,
+            "enable_resource_name_dns_aaaa_record_on_launch": false,
+            "id": "subnet-013f5da9e24446698",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_id": "",
+            "ipv6_ipam_pool_id": null,
+            "ipv6_native": false,
+            "ipv6_netmask_length": null,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": true,
+            "outpost_arn": "",
+            "owner_id": "304188066409",
+            "private_dns_hostname_type_on_launch": "ip-name",
+            "region": "ap-southeast-1",
+            "tags": {
+              "Name": "Kelvin-Cloud-Project-public-subnet-2"
+            },
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Name": "Kelvin-Cloud-Project-public-subnet-2",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "id": "subnet-013f5da9e24446698",
+            "region": "ap-southeast-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6MTIwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.network",
+      "mode": "managed",
+      "type": "aws_vpc",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:vpc/vpc-0b76f007ce2a775ec",
+            "assign_generated_ipv6_cidr_block": false,
+            "cidr_block": "10.0.0.0/16",
+            "default_network_acl_id": "acl-06b5b096280727250",
+            "default_route_table_id": "rtb-0edd16bb6ad44bbb3",
+            "default_security_group_id": "sg-09b3bcdc778244d3d",
+            "dhcp_options_id": "dopt-055b7c55d9c3e1bc7",
+            "enable_dns_hostnames": true,
+            "enable_dns_support": true,
+            "enable_network_address_usage_metrics": false,
+            "id": "vpc-0b76f007ce2a775ec",
+            "instance_tenancy": "default",
+            "ipv4_ipam_pool_id": null,
+            "ipv4_netmask_length": null,
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_network_border_group": "",
+            "ipv6_ipam_pool_id": "",
+            "ipv6_netmask_length": 0,
+            "main_route_table_id": "rtb-0edd16bb6ad44bbb3",
+            "owner_id": "304188066409",
+            "region": "ap-southeast-1",
+            "tags": {
+              "Name": "Kelvin-Cloud-Project-vpc"
+            },
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Name": "Kelvin-Cloud-Project-vpc",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            }
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "id": "vpc-0b76f007ce2a775ec",
+            "region": "ap-southeast-1"
+          },
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "create_before_destroy": true
+        }
+      ]
+    },
+    {
+      "module": "module.rds",
+      "mode": "managed",
+      "type": "aws_db_instance",
+      "name": "postgres",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "address": "terraform-20260418081503508100000003.cb2kyieei26f.ap-southeast-1.rds.amazonaws.com",
+            "allocated_storage": 20,
+            "allow_major_version_upgrade": null,
+            "apply_immediately": false,
+            "arn": "arn:aws:rds:ap-southeast-1:304188066409:db:terraform-20260418081503508100000003",
+            "auto_minor_version_upgrade": true,
+            "availability_zone": "ap-southeast-1a",
+            "backup_retention_period": 0,
+            "backup_target": "region",
+            "backup_window": "14:07-14:37",
+            "blue_green_update": [],
+            "ca_cert_identifier": "rds-ca-rsa2048-g1",
+            "character_set_name": "",
+            "copy_tags_to_snapshot": false,
+            "custom_iam_instance_profile": "",
+            "customer_owned_ip_enabled": false,
+            "database_insights_mode": "standard",
+            "db_name": "myappdb",
+            "db_subnet_group_name": "kelvin-cloud-project-db-subnet-group",
+            "dedicated_log_volume": false,
+            "delete_automated_backups": true,
+            "deletion_protection": false,
+            "domain": "",
+            "domain_auth_secret_arn": "",
+            "domain_dns_ips": [],
+            "domain_fqdn": "",
+            "domain_iam_role_name": "",
+            "domain_ou": "",
+            "enabled_cloudwatch_logs_exports": [],
+            "endpoint": "terraform-20260418081503508100000003.cb2kyieei26f.ap-southeast-1.rds.amazonaws.com:5432",
+            "engine": "postgres",
+            "engine_lifecycle_support": "open-source-rds-extended-support",
+            "engine_version": "15",
+            "engine_version_actual": "15.14",
+            "final_snapshot_identifier": null,
+            "hosted_zone_id": "Z2G0U3KFCY8NZ5",
+            "iam_database_authentication_enabled": false,
+            "id": "db-SGQFXGJI6C2KZVPS3XSJ4LRSE4",
+            "identifier": "terraform-20260418081503508100000003",
+            "identifier_prefix": "terraform-",
+            "instance_class": "db.t3.micro",
+            "iops": 0,
+            "kms_key_id": "",
+            "latest_restorable_time": "",
+            "license_model": "postgresql-license",
+            "listener_endpoint": [],
+            "maintenance_window": "sat:18:31-sat:19:01",
+            "manage_master_user_password": null,
+            "master_user_secret": [],
+            "master_user_secret_kms_key_id": null,
+            "max_allocated_storage": 0,
+            "monitoring_interval": 0,
+            "monitoring_role_arn": "",
+            "multi_az": false,
+            "nchar_character_set_name": "",
+            "network_type": "IPV4",
+            "option_group_name": "default:postgres-15",
+            "parameter_group_name": "default.postgres15",
+            "password": "GExIHhACzqTeQhdI",
+            "password_wo": null,
+            "password_wo_version": null,
+            "performance_insights_enabled": false,
+            "performance_insights_kms_key_id": "",
+            "performance_insights_retention_period": 0,
+            "port": 5432,
+            "publicly_accessible": false,
+            "region": "ap-southeast-1",
+            "replica_mode": "",
+            "replicas": [],
+            "replicate_source_db": "",
+            "resource_id": "db-SGQFXGJI6C2KZVPS3XSJ4LRSE4",
+            "restore_to_point_in_time": [],
+            "s3_import": [],
+            "skip_final_snapshot": true,
+            "snapshot_identifier": null,
+            "status": "available",
+            "storage_encrypted": false,
+            "storage_throughput": 0,
+            "storage_type": "gp2",
+            "tags": {
+              "Name": "Kelvin-Cloud-Project-db"
+            },
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Name": "Kelvin-Cloud-Project-db",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "timezone": "",
+            "upgrade_rollout_order": "second",
+            "upgrade_storage_config": null,
+            "username": "dbadmin",
+            "vpc_security_group_ids": [
+              "sg-05a8136f8f6e9c6ee"
+            ]
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "password"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "password_wo"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozMDAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInVwZGF0ZSI6NDgwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMiJ9",
+          "dependencies": [
+            "module.alb.aws_security_group.alb_sg",
+            "module.ecs.aws_security_group.ecs_sg",
+            "module.network.aws_subnet.public",
+            "module.network.aws_vpc.main",
+            "module.rds.aws_db_subnet_group.main",
+            "module.rds.aws_security_group.rds_sg",
+            "module.rds.random_password.db_pass"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.rds",
+      "mode": "managed",
+      "type": "aws_db_subnet_group",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "arn": "arn:aws:rds:ap-southeast-1:304188066409:subgrp:kelvin-cloud-project-db-subnet-group",
+            "description": "Managed by Terraform",
+            "id": "kelvin-cloud-project-db-subnet-group",
+            "name": "kelvin-cloud-project-db-subnet-group",
+            "name_prefix": "",
+            "region": "ap-southeast-1",
+            "subnet_ids": [
+              "subnet-013f5da9e24446698",
+              "subnet-0aa57888e042ffd18"
+            ],
+            "supported_network_types": [
+              "IPV4"
+            ],
+            "tags": {
+              "Name": "Kelvin-Cloud-Project-db-subnet-group"
+            },
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Name": "Kelvin-Cloud-Project-db-subnet-group",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.network.aws_subnet.public",
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.rds",
+      "mode": "managed",
+      "type": "aws_security_group",
+      "name": "rds_sg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "arn": "arn:aws:ec2:ap-southeast-1:304188066409:security-group/sg-05a8136f8f6e9c6ee",
+            "description": "Managed by Terraform",
+            "egress": [
+              {
+                "cidr_blocks": [
+                  "0.0.0.0/0"
+                ],
+                "description": "",
+                "from_port": 0,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "-1",
+                "security_groups": [],
+                "self": false,
+                "to_port": 0
+              }
+            ],
+            "id": "sg-05a8136f8f6e9c6ee",
+            "ingress": [
+              {
+                "cidr_blocks": [],
+                "description": "",
+                "from_port": 5432,
+                "ipv6_cidr_blocks": [],
+                "prefix_list_ids": [],
+                "protocol": "tcp",
+                "security_groups": [
+                  "sg-06daefa4e4b245242"
+                ],
+                "self": false,
+                "to_port": 5432
+              }
+            ],
+            "name": "Kelvin-Cloud-Project-rds-sg",
+            "name_prefix": "",
+            "owner_id": "304188066409",
+            "region": "ap-southeast-1",
+            "revoke_rules_on_delete": false,
+            "tags": {
+              "Name": "Kelvin-Cloud-Project-rds-sg"
+            },
+            "tags_all": {
+              "Environment": "Dev",
+              "ManagedBy": "Terraform",
+              "Name": "Kelvin-Cloud-Project-rds-sg",
+              "Owner": "Kelvin",
+              "Project": "Fargate-Migration"
+            },
+            "timeouts": null,
+            "vpc_id": "vpc-0b76f007ce2a775ec"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "identity": {
+            "account_id": "304188066409",
+            "id": "sg-05a8136f8f6e9c6ee",
+            "region": "ap-southeast-1"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6OTAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "module.alb.aws_security_group.alb_sg",
+            "module.ecs.aws_security_group.ecs_sg",
+            "module.network.aws_vpc.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.rds",
+      "mode": "managed",
+      "type": "random_password",
+      "name": "db_pass",
+      "provider": "provider[\"registry.terraform.io/hashicorp/random\"]",
+      "instances": [
+        {
+          "schema_version": 3,
+          "attributes": {
+            "bcrypt_hash": "$2a$10$Hc/KTWfKVmS.M4idVx3Ra.cdQkA2yr76h6bFORT7saYBXwFb9fNKq",
+            "id": "none",
+            "keepers": null,
+            "length": 16,
+            "lower": true,
+            "min_lower": 0,
+            "min_numeric": 0,
+            "min_special": 0,
+            "min_upper": 0,
+            "number": true,
+            "numeric": true,
+            "override_special": "_%!",
+            "result": "GExIHhACzqTeQhdI",
+            "special": true,
+            "upper": true
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "bcrypt_hash"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "result"
+              }
+            ]
+          ],
+          "identity_schema_version": 0
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
