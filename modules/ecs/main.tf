@@ -107,12 +107,6 @@ resource "aws_ecs_service" "main" {
   }
 
   load_balancer {
-    target_group_arn = var.target_group_arn_2 
-    container_name = var.container_name
-    container_port   = 80
-  }
-
-  load_balancer {
     target_group_arn = var.grafana_tg_arn
     container_name   = "grafana" # Must match the name in container_definitions
     container_port   = 3000
