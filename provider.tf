@@ -39,7 +39,7 @@ data "aws_secretsmanager_secret_version" "grafana_token" {
 }
 
 provider "grafana" {
-  url  = "https://klvnjntn.grafana.net"
-  auth = data.aws_secretsmanager_secret_version.grafana_token.secret_string
+  url   = "http://Kelvin-Cloud-Project-alb-176713956.ap-southeast-1.elb.amazonaws.com/grafana"
+  auth  = var.grafana_auth # Your API token or admin:password credentials
 }
 
