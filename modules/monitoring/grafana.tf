@@ -1,8 +1,3 @@
-resource "grafana_folder" "project_monitoring" {
-  title      = "Project Monitoring"
-  depends_on = [null_resource.wait_for_grafana] # Wait for the health check to pass
-}
-
 resource "grafana_data_source" "cloudwatch" {
   type = "cloudwatch"
   name = "AWS-CloudWatch"
