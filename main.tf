@@ -40,6 +40,7 @@ module "ecs" {
   db_endpoint            = module.rds.db_instance_endpoint
   db_password_ssm_arn = module.rds.db_password_ssm_arn
   grafana_tg_arn     = module.alb.grafana_tg_arn
+  alb_dns_name       = module.alb.alb_dns_name
 }
 
 module "monitoring" {

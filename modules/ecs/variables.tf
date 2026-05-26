@@ -52,3 +52,8 @@ variable "grafana_tg_arn" {
   description = "ARN of the Grafana Target Group"
   type        = string
 }
+
+variable "alb_dns_name" {
+  type        = string
+  description = "The DNS name of the Application Load Balancer"
+}
