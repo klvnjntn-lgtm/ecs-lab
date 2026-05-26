@@ -1,18 +1,3 @@
-resource "null_resource" "wait_for_grafana" {
-  depends_on = [var.alb_listener_rule_arn]
-
-  provisioner "local-exec" {
-    command = <<EOT
-      echo "Waiting for Grafana to be healthy at ${var.alb_dns_name}..."
-      until $(curl --output /dev/null --silent --head --fail http://${var.alb_dns_name}/grafana/api/health); do
-        printf '.'
-        sleep 5
-      done
-      echo "Grafana is up!"
-    EOT
-  }
-}
-
 resource "grafana_folder" "project_monitoring" {
   title      = "Project Monitoring"
   depends_on = [null_resource.wait_for_grafana] # Wait for the health check to pass
