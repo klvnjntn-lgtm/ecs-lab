@@ -1,7 +1,6 @@
 resource "grafana_data_source" "cloudwatch" {
   type = "cloudwatch"
   name = "AWS-CloudWatch"
-  depends_on = [grafana_folder.project_monitoring]
 
   json_data_encoded = jsonencode({
     defaultRegion = "ap-southeast-1"
@@ -11,7 +10,6 @@ resource "grafana_data_source" "cloudwatch" {
 }
 
 resource "grafana_dashboard" "ecs_metrics" {
-  folder      = grafana_folder.project_monitoring.id
   config_json = file("${path.module}/dashboards/ecs_fargate.json")
 }
 
