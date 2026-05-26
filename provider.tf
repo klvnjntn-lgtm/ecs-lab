@@ -40,7 +40,7 @@ data "aws_secretsmanager_secret_version" "grafana_token" {
 
 provider "grafana" {
   # Direct connection to your dedicated ALB module
-  url  = "http://${module.alb.alb_dns_name}/grafana/"
+url  = "http://${module.alb.alb_dns_name}:3000/"
   auth = data.aws_secretsmanager_secret_version.grafana_token.secret_string
 }
 
