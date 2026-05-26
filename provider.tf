@@ -39,7 +39,8 @@ data "aws_secretsmanager_secret_version" "grafana_token" {
 }
 
 provider "grafana" {
-url   = "http://Kelvin-Cloud-Project-alb-176713956.ap-southeast-1.elb.amazonaws.com/grafana/"
-auth = "data:aws_secretsmanager_secret_version.grafana_token.secret_string"
+  # Direct connection to your dedicated ALB module
+  url  = "http://${module.alb.alb_dns_name}/grafana/"
+  auth = data.aws_secretsmanager_secret_version.grafana_token.secret_string
 }
 

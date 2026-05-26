@@ -4,8 +4,7 @@ resource "grafana_data_source" "cloudwatch" {
 
   json_data_encoded = jsonencode({
     defaultRegion = "ap-southeast-1"
-    authType      = "arn"
-    assumeRoleArn = "arn:aws:iam::123456789012:role/YourGrafanaRole" 
+authType      = "default"
   })
 }
 
