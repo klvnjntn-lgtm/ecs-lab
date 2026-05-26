@@ -34,11 +34,13 @@ resource "aws_ecs_task_definition" "app" {
       environment = [
 {
           name  = "GF_SERVER_ROOT_URL"
-          value = "http://Kelvin-Cloud-Project-alb-176713956.ap-southeast-1.elb.amazonaws.com/grafana/"
+value = "http://${var.alb_dns_name}/grafana/"
         },        { name = "GF_SERVER_SERVE_FROM_SUB_PATH", value = "true" },
         { name = "GF_SESSION_COOKIE_PATH", value = "/grafana/" },
         { name = "GF_SESSION_COOKIE_SECURE", value = "false" },
-        { name = "GF_SECURITY_COOKIE_SAMESITE", value = "lax" }
+        { name = "GF_SECURITY_COOKIE_SAMESITE", value = "lax" },
+        { name = "GF_SECURITY_ADMIN_USER", value = "admin" },
+        { name = "GF_SECURITY_ADMIN_PASSWORD", value = "KelvinSecurePass123!" }
       ]
       logConfiguration = {
         logDriver = "awslogs"
