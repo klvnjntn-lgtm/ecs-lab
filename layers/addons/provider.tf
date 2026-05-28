@@ -2,8 +2,26 @@ data "terraform_remote_state" "infra" {
   backend = "s3" 
   config = {
     bucket = "kelvin-terraform-state-permanent"
-    key    = "infra/terraform.tfstate"
+    
+    # FIX: Change this from "infra/terraform.tfstate" to match your infra backend key
+    key    = "ecs/terraform.tfstate" 
+    
     region = "ap-southeast-1"
+  }
+}
+
+# layers/addons/main.tf (at the very top)
+terraform {
+  required_version = ">= 1.0"
+  required_providers {
+    grafana = {
+      source  = "grafana/grafana"
+      version = "~> 4.0"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
   }
 }
 
