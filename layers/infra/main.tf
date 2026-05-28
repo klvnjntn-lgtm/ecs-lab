@@ -1,5 +1,5 @@
 module "network" {
-  source              = "./modules/network"
+  source              = "../../modules/network"
   project_name        = "Kelvin-Cloud-Project"
   availability_zones  = var.availability_zones
   public_subnet_cidrs = var.public_subnet_cidrs
@@ -7,20 +7,15 @@ module "network" {
 }
 
 module "alb" {
-  source            = "./modules/alb"
+  source            = "../../modules/alb"
   project_name      = var.project_name
   vpc_id            = module.network.vpc_id
   public_subnet_ids = module.network.public_subnet_ids
   ecs_sg_id        = module.ecs.ecs_sg_id
 }
 
-module "ecr" {
-  source       = "./modules/ecr"
-  project_name = var.project_name
-}
-
 module "rds" {
-  source       = "./modules/rds"
+  source       = "../../modules/rds"
   project_name = var.project_name
   vpc_id       = module.network.vpc_id
   ecs_sg_id    = module.ecs.ecs_sg_id
@@ -28,7 +23,7 @@ module "rds" {
 }
 
 module "ecs" {
-  source             = "./modules/ecs"
+  source             = "../../modules/ecs"
   project_name       = var.project_name
   container_name = var.container_name
   repository_url     = module.ecr.repository_url
@@ -45,15 +40,4 @@ module "ecs" {
   rds_password      = module.rds.rds_password
   rds_db_name       = module.rds.rds_db_name
   rds_username      = module.rds.rds_username
-}
-
-module "monitoring" {
-  source                  = "./modules/monitoring"
-  project_name            = var.project_name
-  alb_arn_suffix          = module.alb.alb_arn_suffix
-  target_group_arn_suffix = module.alb.tg_arn_suffix
-  target_group_2_arn_suffix = module.alb.tg_2_arn_suffix
-  alb_listener_rule_arn = module.alb.alb_listener_rule_monitoring_arn
-  alb_dns_name = module.alb.alb_dns_name
-  grafana_ready_signal = module.ecs.ecs_service_ready
 }

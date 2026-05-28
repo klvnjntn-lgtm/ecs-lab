@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -18,7 +19,6 @@ jobs:
       service_name: ${{ steps.set_output.outputs.ecs_service_name }}
       task_family: ${{ steps.set_output.outputs.ecs_task_definition_family }}
       container_name: ${{ steps.set_output.outputs.container_name }} 
-
       
     env:
       AWS_REGION: "ap-southeast-1"
@@ -32,7 +32,7 @@ jobs:
       - name: Checkov GitHub Action
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: .
+          directory: layer/infra # Target the infra folder for security scans
           framework: terraform
           soft_fail: true 
 
@@ -45,19 +45,28 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
-        run: terraform init
+      # --- 1. INFRA LAYER ---
+      - name: Terraform Init (Infra)
+        run: terraform -chdir=layer/infra init
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve -input=false
+      - name: Terraform Apply (Infra)
+        run: terraform -chdir=layer/infra apply -auto-approve -input=false
         
+      # Extract outputs directly from the infra state using -chdir
       - name: Export Outputs
         id: set_output
         run: |
-          echo "ecs_cluster_name=$(terraform output -raw ecs_cluster_name)" >> $GITHUB_OUTPUT
-          echo "ecs_service_name=$(terraform output -raw ecs_service_name)" >> $GITHUB_OUTPUT
-          echo "ecs_task_definition_family=$(terraform output -raw ecs_task_definition_family)" >> $GITHUB_OUTPUT
-          echo "container_name=$(terraform output -raw container_name)" >> $GITHUB_OUTPUT
+          echo "ecs_cluster_name=$(terraform -chdir=layer/infra output -raw ecs_cluster_name)" >> $GITHUB_OUTPUT
+          echo "ecs_service_name=$(terraform -chdir=layer/infra output -raw ecs_service_name)" >> $GITHUB_OUTPUT
+          echo "ecs_task_definition_family=$(terraform -chdir=layer/infra output -raw ecs_task_definition_family)" >> $GITHUB_OUTPUT
+          echo "container_name=$(terraform -chdir=layer/infra output -raw container_name)" >> $GITHUB_OUTPUT
+
+      # --- 2. ADDONS LAYER ---
+      - name: Terraform Init (Addons)
+        run: terraform -chdir=layer/addons init
+
+      - name: Terraform Apply (Addons)
+        run: terraform -chdir=layer/addons apply -auto-approve -input=false
 
   deploy:
     name: "Build & Deploy"
@@ -94,14 +103,12 @@ jobs:
           ECR_REPOSITORY: "kelvin-cloud-project-repo"
           IMAGE_TAG: ${{ steps.vars.outputs.sha_short }}
         run: |
-          # Point to the new sub-folder path
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./app
-          
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
       - name: Download Task Definition
         run: |
-          # Fixed: Now querying the Task Family instead of Service Name
           aws ecs describe-task-definition --task-definition $TASK_FAMILY --query taskDefinition > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition

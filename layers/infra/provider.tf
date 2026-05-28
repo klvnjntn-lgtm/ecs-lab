@@ -34,10 +34,4 @@ provider "aws" {
   }
 }
 
-provider "grafana" {
-  url  = "http://${module.alb.alb_dns_name}/grafana/"
-  
-  # 🚀 Dynamic Admin Auth using your RDS configurations:
-  # This uses the exact same username and password your RDS module generated!
-  auth = "dbadmin:${module.rds.rds_password}"
-}
+
