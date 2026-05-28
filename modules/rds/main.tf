@@ -43,6 +43,7 @@ resource "aws_db_instance" "postgres" {
   instance_class         = "db.t3.micro"
   db_name                = "myappdb"
   username               = "dbadmin"
+  identifier             = "kelvin-cloud-db"
   
   # Use the generated password
   password               = random_password.db_pass.result 
