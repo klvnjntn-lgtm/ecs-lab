@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "app" {
     {
       name         = "grafana"
       image        = "grafana/grafana:latest"
-      essential    = true
+      essential    = false
       linuxParameters = {
         initProcessEnabled = true
       }
@@ -65,7 +65,7 @@ resource "aws_ecs_task_definition" "app" {
         # 🟢 FIX: Removed literal quotes so Terraform parses the actual variables
         { name = "GF_DATABASE_NAME", value = var.rds_db_name },       
         { name = "GF_DATABASE_USER", value = var.rds_username },       
-        { name = "GF_DATABASE_PASSWORD", value = var.rds_password }
+        { name = "GF_DATABASE_PASSWORD", value = rds123 }
       ] # 🟢 FIX: Added a comma here to cleanly separate the block parameters
       logConfiguration = {
         logDriver = "awslogs"
