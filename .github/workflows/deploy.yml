@@ -32,7 +32,7 @@ jobs:
       - name: Checkov GitHub Action
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: layer/infra # Target the infra folder for security scans
+          directory: layers/infra # Target the infra folder for security scans
           framework: terraform
           soft_fail: true 
 
@@ -47,10 +47,10 @@ jobs:
 
       # --- 1. INFRA LAYER ---
       - name: Terraform Init (Infra)
-        run: terraform -chdir=layer/infra init
+        run: terraform -chdir=layers/infra init
 
       - name: Terraform Apply (Infra)
-        run: terraform -chdir=layer/infra apply -auto-approve -input=false
+        run: terraform -chdir=layers/infra apply -auto-approve -input=false
         
       # Extract outputs directly from the infra state using -chdir
       - name: Export Outputs
@@ -63,10 +63,10 @@ jobs:
 
       # --- 2. ADDONS LAYER ---
       - name: Terraform Init (Addons)
-        run: terraform -chdir=layer/addons init
+        run: terraform -chdir=layers/addons init
 
       - name: Terraform Apply (Addons)
-        run: terraform -chdir=layer/addons apply -auto-approve -input=false
+        run: terraform -chdir=layers/addons apply -auto-approve -input=false
 
   deploy:
     name: "Build & Deploy"
