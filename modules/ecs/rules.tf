@@ -4,7 +4,7 @@ resource "aws_security_group_rule" "ecs_from_alb" {
   from_port                = 3000
   to_port                  = 3000
   protocol                 = "tcp"
-  source_security_group_id = module.alb.alb_sg_id
+  source_security_group_id = var.alb_sg_id
   security_group_id        = aws_security_group.ecs_sg.id
 }
 

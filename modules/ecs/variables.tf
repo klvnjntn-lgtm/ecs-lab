@@ -13,11 +13,6 @@ variable "public_subnets" {
   description = "Subnets where the Fargate tasks will run"
 }
 
-variable "repository_url" {
-  type        = string
-  description = "The ECR repository URL for the task definition"
-}
-
 variable "target_group_arn" {
   type        = string
   description = "Blue Target Group"
@@ -77,4 +72,9 @@ variable "rds_db_name" {
 variable "rds_username" {
   type        = string
   description = "The username for the RDS database"
+}
+
+variable "repository_url" {
+  type        = string
+  description = "The URL of the ECR repository to pull the container image from"
 }
