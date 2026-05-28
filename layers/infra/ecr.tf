@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "app_repo" {
-  name                 = lower("${var.project_name}-repo")
+  name                 = "Kelvin-Cloud-Project-repo"
   image_tag_mutability = "MUTABLE"
   force_delete = true 
 

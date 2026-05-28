@@ -26,7 +26,7 @@ module "ecs" {
   source             = "../../modules/ecs"
   project_name       = var.project_name
   container_name = var.container_name
-  repository_url     = module.ecr.repository_url
+  ecr_repository_url     = aws_ecr_repository.app_repo.repository_url
   vpc_id             = module.network.vpc_id
   public_subnets     = module.network.public_subnet_ids
   alb_sg_id          = module.alb.alb_sg_id
