@@ -1,3 +1,16 @@
+# modules/monitoring/providers.tf (or append to main.tf)
+terraform {
+  required_providers {
+    grafana = {
+      source  = "grafana/grafana"
+      version = "~> 4.0"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
 resource "grafana_data_source" "cloudwatch" {
   type = "cloudwatch"
   name = "AWS-CloudWatch"
