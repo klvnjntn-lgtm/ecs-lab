@@ -5,6 +5,7 @@ resource "aws_ssm_parameter" "discord_webhook" {
   type        = "SecureString"
   value       = "INSERT_WEBHOOK_URL_HERE" 
 
+overwrite = true
   lifecycle {
     ignore_changes = [value]
   }
