@@ -55,4 +55,5 @@ module "monitoring" {
   target_group_2_arn_suffix = module.alb.tg_2_arn_suffix
   alb_listener_rule_arn = module.alb.alb_listener_rule_monitoring_arn
   alb_dns_name = module.alb.alb_dns_name
+  grafana_ready_signal = module.ecs.ecs_service_ready
 }

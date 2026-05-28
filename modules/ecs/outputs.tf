@@ -31,3 +31,7 @@ output "task_definition_family" {
 output "container_name" {
   value = var.container_name
 }
+
+output "ecs_service_ready" {
+  value = aws_ecs_service.main.id
+}

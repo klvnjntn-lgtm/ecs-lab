@@ -15,19 +15,6 @@ variable "alb_arn_suffix" {
   type = string
 }
 
-variable "grafana_url" {
-  type        = string
-  description = "The URL of the Grafana Cloud instance"
-  default     = "https://klvnjntn.grafana.net"
-}
-
-variable "grafana_token" {
-  type        = string
-  description = "The Service Account token for Grafana"
-  sensitive   = true
-  default     = "INSERT_TOKEN_HERE"
-}
-
 variable "alb_listener_rule_arn" {
   type        = string
   description = "ARN of the ALB listener rule for Grafana"
@@ -36,4 +23,9 @@ variable "alb_listener_rule_arn" {
 variable "alb_dns_name" {
   type        = string
   description = "DNS name of the ALB"
+}
+
+variable "grafana_ready_signal" {
+  type    = string
+  default = ""
 }

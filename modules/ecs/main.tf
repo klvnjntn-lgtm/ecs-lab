@@ -1,3 +1,23 @@
+resource "null_resource" "grafana_ready" {
+  provisioner "local-exec" {
+    # This loop polls the Grafana API until it gets a 200 OK, or times out after 5 minutes
+    command = <<EOT
+      echo "Waiting for Grafana API to be ready..."
+      for i in {1..30}; do
+        if curl -s -o /dev/null -w "%%{http_code}" http://${var.alb_dns_name}/grafana/api/health | grep -q "200"; then
+          echo "Grafana is healthy!"
+          exit 0
+        fi
+        echo "Waiting for Grafana... ($i/30)"
+        sleep 10
+      done
+      echo "Grafana failed to start." && exit 1
+    EOT
+  }
+  # This makes the monitoring module wait for this signal
+  depends_on = [aws_ecs_service.main]
+}
+
 resource "aws_cloudwatch_log_group" "ecs" {
   name              = "/ecs/${var.project_name}"
   retention_in_days = 7
