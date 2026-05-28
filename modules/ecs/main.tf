@@ -18,38 +18,35 @@ resource "aws_ecs_task_definition" "app" {
 
   container_definitions = jsonencode([
     {
-      name      = var.container_name
-      image     = "${var.repository_url}:latest"
-      essential = true
+      name         = var.container_name
+      image        = "${var.repository_url}:latest"
+      essential    = true
       portMappings = [{ containerPort = 80, hostPort = 80, protocol = "tcp" }]
     },
     {
-      name      = "grafana"
-      image     = "grafana/grafana:latest"
-      essential = true
-      "linuxParameters": {
-    "initProcessEnabled": true
-  },
+      name         = "grafana"
+      image        = "grafana/grafana:latest"
+      essential    = true
+      linuxParameters = {
+        initProcessEnabled = true
+      }
       portMappings = [{ containerPort = 3000, hostPort = 3000, protocol = "tcp" }]
       environment = [
-{
-          name  = "GF_SERVER_ROOT_URL"
-value = "http://${var.alb_dns_name}/grafana/"
-        },        { name = "GF_SERVER_SERVE_FROM_SUB_PATH", value = "true" },
+        { name = "GF_SERVER_ROOT_URL", value = "http://${var.alb_dns_name}/grafana/" },
+        { name = "GF_SERVER_SERVE_FROM_SUB_PATH", value = "true" },
         { name = "GF_SESSION_COOKIE_PATH", value = "/grafana/" },
         { name = "GF_SESSION_COOKIE_SECURE", value = "false" },
         { name = "GF_SECURITY_COOKIE_SAMESITE", value = "lax" },
         { name = "GF_SECURITY_ADMIN_USER", value = "admin" },
         { name = "GF_SECURITY_ADMIN_PASSWORD", value = "KelvinSecurePass123!" },
-{ name = "GF_DATABASE_TYPE", value = "postgres" },
-        
-        # 🚀 FIX: Strips out the port if var.rds_address includes ":5432"
+        { name = "GF_DATABASE_TYPE", value = "postgres" },
         { name = "GF_DATABASE_HOST", value = split(":", var.rds_address)[0] }, 
         
-        { name = "GF_DATABASE_NAME", value = "var.rds_db_name" },       
-        { name = "GF_DATABASE_USER", value = "var.rds_username" },       
+        # 🟢 FIX: Removed literal quotes so Terraform parses the actual variables
+        { name = "GF_DATABASE_NAME", value = var.rds_db_name },       
+        { name = "GF_DATABASE_USER", value = var.rds_username },       
         { name = "GF_DATABASE_PASSWORD", value = var.rds_password }
-              ]
+      ] # 🟢 FIX: Added a comma here to cleanly separate the block parameters
       logConfiguration = {
         logDriver = "awslogs"
         options = {
