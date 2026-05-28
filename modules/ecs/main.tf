@@ -72,10 +72,10 @@ resource "aws_ecs_service" "main" {
   desired_count   = 2
   launch_type     = "FARGATE"
 
-# 🚀 ADD THIS BLOCK HERE:
-  provisioner "local-exec" {
-    command = "echo 'Waiting for ECS tasks to boot and clear health checks...' && sleep 90"
+provisioner "local-exec" {
+    command = "echo 'Waiting for Grafana to run RDS migrations and clear ALB health checks...' && sleep 150"
   }
+  
   deployment_controller {
     type = "ECS"
   }
