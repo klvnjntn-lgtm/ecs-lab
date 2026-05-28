@@ -56,10 +56,10 @@ jobs:
       - name: Export Outputs
         id: set_output
         run: |
-          echo "ecs_cluster_name=$(terraform -chdir=layer/infra output -raw ecs_cluster_name)" >> $GITHUB_OUTPUT
-          echo "ecs_service_name=$(terraform -chdir=layer/infra output -raw ecs_service_name)" >> $GITHUB_OUTPUT
-          echo "ecs_task_definition_family=$(terraform -chdir=layer/infra output -raw ecs_task_definition_family)" >> $GITHUB_OUTPUT
-          echo "container_name=$(terraform -chdir=layer/infra output -raw container_name)" >> $GITHUB_OUTPUT
+          echo "ecs_cluster_name=$(terraform -chdir=layers/infra output -raw ecs_cluster_name)" >> $GITHUB_OUTPUT
+          echo "ecs_service_name=$(terraform -chdir=layers/infra output -raw ecs_service_name)" >> $GITHUB_OUTPUT
+          echo "ecs_task_definition_family=$(terraform -chdir=layers/infra output -raw ecs_task_definition_family)" >> $GITHUB_OUTPUT
+          echo "container_name=$(terraform -chdir=layers/infra output -raw container_name)" >> $GITHUB_OUTPUT
 
       # --- 2. ADDONS LAYER ---
       - name: Terraform Init (Addons)
