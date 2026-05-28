@@ -64,6 +64,14 @@ jobs:
       # --- 2. ADDONS LAYER ---
       - name: Terraform Init (Addons)
         run: terraform -chdir=layers/addons init
+      
+      # 🔴 ADD THIS STEP RIGHT HERE TO FORCE THE PIPELINE TO IMPORT THEM
+      - name: Force State Import in Pipeline
+        run: |
+          terraform -chdir=layers/addons import aws_budgets_budget.monthly_limit 304188066409:monthly-cost-budget || true
+          terraform -chdir=layers/addons import aws_iam_policy.enforce_mfa arn:aws:iam::304188066409:policy/EnforceMFAPolicy || true
+          terraform -chdir=layers/addons import module.monitoring.aws_iam_role.lambda_exec Kelvin-Cloud-Project-lambda-role || true
+          terraform -chdir=layers/addons import module.monitoring.aws_ssm_parameter.discord_webhook /Kelvin-Cloud-Project/discord-webhook || true
 
       - name: Terraform Apply (Addons)
         run: terraform -chdir=layers/addons apply -auto-approve -input=false
