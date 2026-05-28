@@ -45,7 +45,8 @@ resource "aws_ecs_task_definition" "app" {
         # 🟢 FIX: Removed literal quotes so Terraform parses the actual variables
         { name = "GF_DATABASE_NAME", value = var.rds_db_name },       
         { name = "GF_DATABASE_USER", value = var.rds_username },       
-        { name = "GF_DATABASE_PASSWORD", value = var.rds_password }
+        { name = "GF_DATABASE_PASSWORD", value = var.rds_password },
+        { name = "GF_DATABASE_SSL_MODE", value = "require" }
       ] # 🟢 FIX: Added a comma here to cleanly separate the block parameters
       logConfiguration = {
         logDriver = "awslogs"
