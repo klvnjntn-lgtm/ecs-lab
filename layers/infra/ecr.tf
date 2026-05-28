@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "app_repo" {
-  name                 = "Kelvin-Cloud-Project-repo"
+  name                 = "kelvin-cloud-project-repo"
   image_tag_mutability = "MUTABLE"
   force_delete = true 
 
