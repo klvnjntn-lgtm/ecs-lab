@@ -46,8 +46,8 @@ value = "http://${var.alb_dns_name}/grafana/"
         # 🚀 FIX: Strips out the port if var.rds_address includes ":5432"
         { name = "GF_DATABASE_HOST", value = split(":", var.rds_address)[0] }, 
         
-        { name = "GF_DATABASE_NAME", value = "myappdb" },       
-        { name = "GF_DATABASE_USER", value = "dbadmin" },       
+        { name = "GF_DATABASE_NAME", value = "var.rds_db_name" },       
+        { name = "GF_DATABASE_USER", value = "var.rds_username" },       
         { name = "GF_DATABASE_PASSWORD", value = var.rds_password }
               ]
       logConfiguration = {

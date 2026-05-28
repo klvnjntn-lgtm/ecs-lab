@@ -43,6 +43,8 @@ module "ecs" {
   alb_dns_name       = module.alb.alb_dns_name
   rds_address       = module.rds.rds_address
   rds_password      = module.rds.rds_password
+  rds_db_name       = module.rds.rds_db_name
+  rds_username      = module.rds.rds_username
 }
 
 module "monitoring" {

@@ -21,3 +21,13 @@ output "rds_password" {
   description = "The password for the RDS database admin user"
   sensitive   = true # This prevents the password from printing in plain text in your terminal logs
 }
+
+output "rds_db_name" {
+  value       = aws_db_instance.postgres.db_name
+  description = "The name of the RDS database"
+}
+
+output "rds_username" {
+  value       = aws_db_instance.postgres.username
+  description = "The username for the RDS database"
+}
