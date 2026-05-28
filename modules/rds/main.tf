@@ -5,7 +5,6 @@ resource "random_password" "db_pass" {
   override_special = "_%!" # Avoiding characters that can break connection strings
 }
 
-# 1. The Security Group (The "Vault Door")
 resource "aws_security_group" "rds_sg" {
   name   = "${var.project_name}-rds-sg"
   vpc_id = var.vpc_id
@@ -15,6 +14,9 @@ resource "aws_security_group" "rds_sg" {
     to_port         = 5432
     protocol        = "tcp"
     security_groups = [var.ecs_sg_id]
+    
+    # 🟢 ADD THIS LINE: Allows internal VPC subnets to communicate on port 5432
+    cidr_blocks     = ["10.0.0.0/16"] 
   }
 
   egress {
@@ -23,8 +25,6 @@ resource "aws_security_group" "rds_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  tags = { Name = "${var.project_name}-rds-sg" }
 }
 
 # 2. Subnet Group

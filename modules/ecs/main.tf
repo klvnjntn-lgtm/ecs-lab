@@ -41,13 +41,15 @@ value = "http://${var.alb_dns_name}/grafana/"
         { name = "GF_SECURITY_COOKIE_SAMESITE", value = "lax" },
         { name = "GF_SECURITY_ADMIN_USER", value = "admin" },
         { name = "GF_SECURITY_ADMIN_PASSWORD", value = "KelvinSecurePass123!" },
-        # 🚀 ADD THESE RDS CONFIGURATIONS HERE:
-        { name = "GF_DATABASE_TYPE", value = "postgres" },
-        { name = "GF_DATABASE_HOST", value = var.rds_address }, # e.g., your_rds_instance.endpoint:5432
-        { name = "GF_DATABASE_NAME", value = "myappdb" },       # Matches db_name in your RDS code
-        { name = "GF_DATABASE_USER", value = "dbadmin" },       # Matches username in your RDS code
+{ name = "GF_DATABASE_TYPE", value = "postgres" },
+        
+        # 🚀 FIX: Strips out the port if var.rds_address includes ":5432"
+        { name = "GF_DATABASE_HOST", value = split(":", var.rds_address)[0] }, 
+        
+        { name = "GF_DATABASE_NAME", value = "myappdb" },       
+        { name = "GF_DATABASE_USER", value = "dbadmin" },       
         { name = "GF_DATABASE_PASSWORD", value = var.rds_password }
-      ]
+              ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
@@ -75,7 +77,7 @@ resource "aws_ecs_service" "main" {
 provisioner "local-exec" {
     command = "echo 'Waiting for Grafana to run RDS migrations and clear ALB health checks...' && sleep 150"
   }
-  
+
   deployment_controller {
     type = "ECS"
   }
