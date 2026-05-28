@@ -18,5 +18,15 @@ resource "grafana_dashboard" "ecs_metrics" {
   config_json = file("${path.module}/dashboards/ecs_fargate.json")
 
 depends_on = [grafana_data_source.cloudwatch]
+
 }
 
+import {
+  to = module.monitoring.grafana_data_source.cloudwatch
+  id = "cloudwatch" # Must match the exact string name or UID inside Grafana
+}
+
+import {
+  to = module.monitoring.aws_lambda_permission.sns_trigger
+  id = "Kelvin-Cloud-Project-discord-notifier/AllowExecutionFromSNS"
+}
