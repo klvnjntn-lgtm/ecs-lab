@@ -40,7 +40,13 @@ value = "http://${var.alb_dns_name}/grafana/"
         { name = "GF_SESSION_COOKIE_SECURE", value = "false" },
         { name = "GF_SECURITY_COOKIE_SAMESITE", value = "lax" },
         { name = "GF_SECURITY_ADMIN_USER", value = "admin" },
-        { name = "GF_SECURITY_ADMIN_PASSWORD", value = "KelvinSecurePass123!" }
+        { name = "GF_SECURITY_ADMIN_PASSWORD", value = "KelvinSecurePass123!" },
+        # 🚀 ADD THESE RDS CONFIGURATIONS HERE:
+        { name = "GF_DATABASE_TYPE", value = "postgres" },
+        { name = "GF_DATABASE_HOST", value = var.rds_address }, # e.g., your_rds_instance.endpoint:5432
+        { name = "GF_DATABASE_NAME", value = "myappdb" },       # Matches db_name in your RDS code
+        { name = "GF_DATABASE_USER", value = "dbadmin" },       # Matches username in your RDS code
+        { name = "GF_DATABASE_PASSWORD", value = var.rds_password }
       ]
       logConfiguration = {
         logDriver = "awslogs"
@@ -66,6 +72,10 @@ resource "aws_ecs_service" "main" {
   desired_count   = 2
   launch_type     = "FARGATE"
 
+# 🚀 ADD THIS BLOCK HERE:
+  provisioner "local-exec" {
+    command = "echo 'Waiting for ECS tasks to boot and clear health checks...' && sleep 90"
+  }
   deployment_controller {
     type = "ECS"
   }

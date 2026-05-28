@@ -34,12 +34,10 @@ provider "aws" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "grafana_token" {
-  secret_id = "Kelvin-Cloud-Project/grafana-token"
-}
-
 provider "grafana" {
   url  = "http://${module.alb.alb_dns_name}/grafana/"
-  auth = "admin:KelvinSecurePass123!"
+  
+  # 🚀 Dynamic Admin Auth using your RDS configurations:
+  # This uses the exact same username and password your RDS module generated!
+  auth = "dbadmin:${module.rds.rds_password}"
 }
-

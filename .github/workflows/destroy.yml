@@ -15,6 +15,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Fix: Added the HashiCorp setup action to bring the Terraform CLI into the runner's PATH
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "latest" # Or pin a specific version like "1.14.6" to avoid surprises
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:

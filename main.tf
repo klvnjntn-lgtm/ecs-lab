@@ -37,10 +37,12 @@ module "ecs" {
   alb_sg_id          = module.alb.alb_sg_id
   target_group_arn   = module.alb.tg_1_arn
   target_group_arn_2 = module.alb.tg_2_arn
-  db_endpoint            = module.rds.db_instance_endpoint
+  db_endpoint        = module.rds.db_instance_endpoint
   db_password_ssm_arn = module.rds.db_password_ssm_arn
   grafana_tg_arn     = module.alb.grafana_tg_arn
   alb_dns_name       = module.alb.alb_dns_name
+  rds_address       = module.rds.rds_address
+  rds_password      = module.rds.rds_password
 }
 
 module "monitoring" {

@@ -57,3 +57,15 @@ variable "alb_dns_name" {
   type        = string
   description = "The DNS name of the Application Load Balancer"
 }
+
+variable "rds_address" {
+  type        = string
+  description = "The address of the RDS instance (e.g., your_rds_instance.endpoint:5432)"
+}
+
+variable "rds_password" {
+  type        = string
+  description = "The password for the RDS database passed from the RDS module"
+  sensitive   = true
+}
+
