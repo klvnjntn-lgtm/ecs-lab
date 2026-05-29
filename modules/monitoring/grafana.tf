@@ -1,5 +1,5 @@
 data "http" "grafana_healthcheck" {
-  url = aws_lb.app_alb.dns_name != "" ? "http://${aws_lb.app_alb.dns_name}/grafana/api/health" : "http://localhost/grafana/api/health"
+  url = "aws_lb.app_alb.dns_name/grafana/api/health"
 
   retry {
     attempts     = 20
