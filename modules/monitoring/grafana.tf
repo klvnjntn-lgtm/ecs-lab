@@ -1,5 +1,5 @@
 data "http" "grafana_healthcheck" {
-  url = "http://${data.terraform_remote_state.infra.outputs.alb_dns_name}/grafana/"
+  url = "aws_lb.app_alb.dns_name/grafana/api/health"
     
   retry {
     attempts     = 20
