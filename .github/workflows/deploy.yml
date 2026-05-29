@@ -107,19 +107,21 @@ jobs:
 
       - name: Wait for Grafana API to be ready
         run: |
-          echo "Waiting for Grafana API..."
+          ALB_DNS=$(terraform -chdir=layers/infra output -raw alb_dns_name)
+          echo "Waiting for Grafana at http://$ALB_DNS/grafana/api/health"
           for i in $(seq 1 30); do
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
-              http://Kelvin-Cloud-Project-alb-96119525.ap-southeast-1.elb.amazonaws.com/grafana/api/health)
+              http://$ALB_DNS/grafana/api/health)
             echo "Attempt $i: HTTP $STATUS"
             if [ "$STATUS" = "200" ]; then
               echo "Grafana is ready!"
-                exit 0
-                fi
+              exit 0
+            fi
             sleep 10
           done
           echo "Grafana did not become ready in time"
           exit 1
+
           
       - name: Terraform Init & Apply (Addons)
         run: |
