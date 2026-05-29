@@ -1,15 +1,14 @@
-resource "time_sleep" "wait_for_grafana" {
-  # 🟢 Increased to 90s to guarantee the ALB targets clear their health checks
+resource "time_sleep" "grafana_boot_delay" {
   create_duration = "90s"  
 }
 
 resource "grafana_data_source" "cloudwatch" {
   type = "cloudwatch"
-  name = "AWS-CloudWatch" # 🔴 Note this name string
+  name = "AWS-CloudWatch"
   
-  # 🟢 Native meta-arguments belong directly inside the resource block, NOT inside jsonencode
+  # 🟢 FIX: Update the dependency to match the new timer name
   depends_on = [
-    time_sleep.wait_for_grafana,
+    time_sleep.grafana_boot_delay,
     var.grafana_ready_signal
   ]
 
