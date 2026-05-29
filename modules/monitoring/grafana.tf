@@ -1,41 +1,29 @@
-data "http" "grafana_healthcheck" {
-    url = "http://${var.grafana_url}/api/health"   # <-- was a hardcoded string
-
-  retry {
-    attempts     = 20
-    min_delay_ms = 5000
-    max_delay_ms = 10000
-  }
-
-  lifecycle {
-    postcondition {
-      condition     = self.status_code == 200
-      error_message = "Grafana health check failed after retries"
-    }
-  }
+resource "time_sleep" "wait_for_grafana" {
+  create_duration = "60s"  # Gives Grafana a full minute to complete database migrations
 }
 
 resource "grafana_data_source" "cloudwatch" {
   type = "cloudwatch"
   name = "AWS-CloudWatch"
-
-  depends_on = [data.http.grafana_healthcheck]
+  depends_on = [time_sleep.wait_for_grafana]
 
   json_data_encoded = jsonencode({
     defaultRegion = "ap-southeast-1"
-    authType      = "default"
+authType      = "default"
+depends_on = [var.grafana_ready_signal]
   })
 }
 
 resource "grafana_dashboard" "ecs_metrics" {
   config_json = file("${path.module}/dashboards/ecs_fargate.json")
 
-  depends_on = [grafana_data_source.cloudwatch]
+depends_on = [grafana_data_source.cloudwatch]
+
 }
 
 import {
   to = module.monitoring.grafana_data_source.cloudwatch
-  id = "AWS-CloudWatch"
+  id = "cloudwatch" # Must match the exact string name or UID inside Grafana
 }
 
 import {

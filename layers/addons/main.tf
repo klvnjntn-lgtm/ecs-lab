@@ -8,8 +8,7 @@ module "monitoring" {
   target_group_2_arn_suffix = data.terraform_remote_state.infra.outputs.tg_2_arn_suffix
   alb_listener_rule_arn     = data.terraform_remote_state.infra.outputs.alb_listener_rule_monitoring_arn
   alb_dns_name              = data.terraform_remote_state.infra.outputs.alb_dns_name
-  grafana_url             = data.terraform_remote_state.infra.outputs.alb_dns_name
-  # ...
+
   # Since you deleted the grafana_ready check resource from the ECS layer, 
   # pass a dummy value or a null string if the module variable accepts it, 
   # or remove this line if you updated the monitoring module variables.

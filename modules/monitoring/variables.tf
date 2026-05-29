@@ -29,8 +29,3 @@ variable "grafana_ready_signal" {
   type    = string
   default = ""
 }
-
-variable "grafana_url" {
-  type        = string
-  description = "URL to access Grafana, typically http://<ALB_DNS_NAME>:3000"
-}
