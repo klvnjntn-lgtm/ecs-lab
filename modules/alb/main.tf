@@ -85,9 +85,17 @@ resource "aws_lb_target_group" "grafana_tg" {
   vpc_id      = var.vpc_id
   target_type = "ip"
 
-  health_check {
-    path                = "/grafana/api/health"
-    matcher             = "200"
+health_check {
+  path                = "/grafana/api/health"
+  healthy_threshold   = 2    # down from 3
+  unhealthy_threshold = 3
+  interval            = 15   # down from 30
+  timeout             = 10
+  matcher             = "200"
+}
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

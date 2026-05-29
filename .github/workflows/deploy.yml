@@ -105,15 +105,21 @@ jobs:
           echo "ecs_task_definition_family=$(terraform -chdir=layers/infra output -raw ecs_task_definition_family)" >> $GITHUB_OUTPUT
           echo "container_name=$(terraform -chdir=layers/infra output -raw container_name)" >> $GITHUB_OUTPUT
 
-      - name: Wait for ECS service to stabilize
+      - name: Wait for Grafana API to be ready
         run: |
-          echo "Waiting for ECS service to be stable..."
-          aws ecs wait services-stable \
-            --cluster $(terraform -chdir=layers/infra output -raw ecs_cluster_name) \
-            --services $(terraform -chdir=layers/infra output -raw ecs_service_name) \
-            --region ap-southeast-1
-          echo "ECS stable. Waiting additional 30s for Grafana to initialize..."
-          sleep 30
+          echo "Waiting for Grafana API..."
+          for i in $(seq 1 30); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              http://Kelvin-Cloud-Project-alb-96119525.ap-southeast-1.elb.amazonaws.com/grafana/api/health)
+            echo "Attempt $i: HTTP $STATUS"
+            if [ "$STATUS" = "200" ]; then
+              echo "Grafana is ready!"
+                exit 0
+                fi
+            sleep 10
+          done
+          echo "Grafana did not become ready in time"
+          exit 1
           
       - name: Terraform Init & Apply (Addons)
         run: |
