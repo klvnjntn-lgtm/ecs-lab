@@ -1,5 +1,5 @@
 data "http" "grafana_healthcheck" {
-  url = "aws_lb.app_alb.dns_name/grafana/api/health"
+    url = "http://${var.grafana_url}/api/health"   # <-- was a hardcoded string
 
   retry {
     attempts     = 20
