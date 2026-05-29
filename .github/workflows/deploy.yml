@@ -65,17 +65,6 @@ jobs:
       - name: Terraform Init (Addons)
         run: terraform -chdir=layers/addons init
       
-      # 🔴 ADD THIS STEP RIGHT HERE TO FORCE THE PIPELINE TO IMPORT THEM
-      - name: Force State Import in Pipeline
-        run: |
-          terraform -chdir=layers/addons import aws_budgets_budget.monthly_limit 304188066409:monthly-cost-budget || true
-          terraform -chdir=layers/addons import aws_iam_policy.enforce_mfa arn:aws:iam::304188066409:policy/EnforceMFAPolicy || true
-          terraform -chdir=layers/addons import module.monitoring.aws_iam_role.lambda_exec Kelvin-Cloud-Project-lambda-role || true
-          terraform -chdir=layers/addons import module.monitoring.aws_ssm_parameter.discord_webhook /Kelvin-Cloud-Project/discord-webhook || true
-          terraform -chdir=layers/addons import module.monitoring.aws_lambda_function.discord_alert Kelvin-Cloud-Project-discord-notifier || true
-          terraform -chdir=layers/addons import module.monitoring.aws_lambda_permission.sns_trigger Kelvin-Cloud-Project-discord-notifier/AllowExecutionFromSNS || true
-          # 🟢 FIXED: Moved inside the run execution block where it belongs
-          terraform -chdir=layers/addons import module.monitoring.grafana_data_source.cloudwatch cloudwatch || true
 
       - name: Terraform Apply (Addons)
         run: terraform -chdir=layers/addons apply -auto-approve -input=false
