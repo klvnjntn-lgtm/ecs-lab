@@ -1,3 +1,8 @@
+import {
+  to = module.network.aws_cloudwatch_log_group.vpc_log_group
+  id = "/aws/vpc/Kelvin-Cloud-Project-flow-logs"
+}
+
 module "network" {
   source              = "../../modules/network"
   project_name        = "Kelvin-Cloud-Project"
